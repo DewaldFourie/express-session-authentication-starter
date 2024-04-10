@@ -1,13 +1,13 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const connection = require('./database');
-const { validPassword } = require('../lib/passwordUtils');
 const User = connection.models.User;
+const validPassword = require('../lib/passwordUtils').validPassword;
 
 // create variable for custom fields for local-strategy
 const customFields = {
-    usernameField: 'uname',
-    passwordField: 'pw',
+    usernameField: 'username',
+    passwordField: 'password',
 }
 
 // create a defined callback function to use in strategy
@@ -37,3 +37,15 @@ const strategy = new LocalStrategy(customFields, verifyCallback);
 
 // use the strategy created with passport as a middleware 
 passport.use(strategy);
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+passport.deserializeUser((userId, done) => {
+    User.findById(userId)
+        .then((user) => {
+            done(null, user);
+        })
+        .catch(err => done(err))
+});
