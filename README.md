@@ -1,3 +1,7 @@
+## NB !!!
+
+Look at how helpful req.isAuthenticated || req.logout is for your future app usage !
+
 ## Disclaimer
 
 The patterns shown in this repository are meant for educational purposes.  While this is sufficiently secure to use for personal projects, there are considerations not mentioned in this tutorial series that should be explored for an enterprise-grade implementation.
